@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+}
+
+group 'libreri'
+version '2.0-release'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    
+    compile 'org.xerial:sqlite-jdbc:3.27.2.1'
+    implementation 'org.xerial:sqlite-jdbc:3.27.2.1'
+    //implementation 'com.sun.net.httpserver:http:20070405'
+}
+jar {
+    exclude 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.SF'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    manifest {
+        attributes(
+                'Class-Path': configurations.runtime.files.collect { "lib/$it.name" }.join(' '),
+                'Main-Class': 'ru.bkmz.lib.MainLibtreri'
+        )
+
+    }
+}
